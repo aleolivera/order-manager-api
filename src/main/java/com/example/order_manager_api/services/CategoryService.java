@@ -13,7 +13,7 @@ public class CategoryService implements ICategoryService{
     private CategoryRepository categoryRepo;
     @Override
     public List<Category> findAll() {
-        return categoryRepo.findAll();
+        return categoryRepo.findAllByOrderByIdAsc();
     }
 
     @Override

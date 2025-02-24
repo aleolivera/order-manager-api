@@ -1,39 +1,47 @@
 package com.example.order_manager_api.controllers;
 
+import com.example.order_manager_api.dto_assemblers.BrandDtoAssembler;
+import com.example.order_manager_api.dto_assemblers.IDtoAssembler;
+import com.example.order_manager_api.dtos.BrandDto;
 import com.example.order_manager_api.models.Brand;
 import com.example.order_manager_api.services.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 public class BrandController {
     @Autowired
     private IBrandService brandService;
+    @Autowired
+    private BrandDtoAssembler brandDtoAssembler;
 
     @GetMapping("/v1/brands")
-    public List<Brand> findAll(){
-        return brandService.findAll();
+    public Collection<BrandDto> findAll(){
+        return brandDtoAssembler.toCollection(brandService.findAll());
     }
     @GetMapping("/v1/brands/{id}")
-    public Brand findById(@PathVariable Integer id){
-        return brandService.findById(id);
+    public BrandDto findById(@PathVariable Integer id){
+        return brandDtoAssembler.toDto(brandService.findById(id));
     }
 
     @PostMapping("/v1/brands")
-    public Brand save(@RequestBody Brand newBrand){
-        return brandService.save(newBrand);
+    public BrandDto save(@RequestBody Brand newBrand){
+        return brandDtoAssembler.toDto(brandService.save(newBrand));
     }
 
     @PutMapping("/v1/brands/{id}")
-    public Brand update(@PathVariable Integer id,@RequestBody Brand newBrand){
-        return brandService.update(id,newBrand);
+    public BrandDto update(@PathVariable Integer id,@RequestBody Brand newBrand){
+        return brandDtoAssembler.toDto(brandService.update(id,newBrand));
     }
 
     @DeleteMapping("/v1/brands/{id}")
-    public void delete(@PathVariable Integer id){
+    public ResponseEntity<?> delete(@PathVariable Integer id){
         if(findById(id) != null)
             brandService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
