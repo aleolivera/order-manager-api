@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ICategoryService {
+    boolean existsById(Integer id);
     List<Category> findAll();
     Category findById(Integer id);
     Category save(Category newCategory);

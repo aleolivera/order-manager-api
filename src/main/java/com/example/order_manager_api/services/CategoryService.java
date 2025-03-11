@@ -11,6 +11,12 @@ import java.util.List;
 public class CategoryService implements ICategoryService{
     @Autowired
     private CategoryRepository categoryRepo;
+
+    @Override
+    public boolean existsById(Integer id) {
+        return categoryRepo.existsById(id);
+    }
+
     @Override
     public List<Category> findAll() {
         return categoryRepo.findAllByOrderByIdAsc();

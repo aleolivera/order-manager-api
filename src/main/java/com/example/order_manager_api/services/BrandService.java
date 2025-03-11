@@ -13,6 +13,11 @@ public class BrandService implements IBrandService{
     private BrandRepository brandRepo;
 
     @Override
+    public boolean existsById(Integer id) {
+        return brandRepo.existsById(id);
+    }
+
+    @Override
     public List<Brand> findAll(){
         return brandRepo.findAllByOrderByIdAsc();
     }
@@ -40,4 +45,6 @@ public class BrandService implements IBrandService{
     public void delete(Integer id){
         brandRepo.delete(findById(id));
     }
+
+
 }

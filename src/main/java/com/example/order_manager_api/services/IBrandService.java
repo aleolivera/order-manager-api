@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface IBrandService {
+    boolean existsById(Integer id);
     List<Brand> findAll();
     Brand findById(Integer id);
     Brand save(Brand newBrand);
